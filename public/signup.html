@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+</head>
+<body>
+    <div>
+        <input type="text" id="email" placeholder="Enter your email"/><br>
+        <input type="password" id="password" placeholder="Enter your password"/><br>
+        <button onclick="signupHandler()">Sign Up</button>
+    </div>
+    <br>
+    <div>already <a href="/signin.html">signin</a></div>
+
+    <script>
+        async function signupHandler(){
+           const email = document.getElementById('email').value;
+           const password = document.getElementById('password').value;
+
+           //Axios by default throws error in case of status - 4xx or 5xx
+           try{
+                const response = await axios({
+                    method : "post",
+                    url : "http://localhost:3000/signup",
+                    data : {
+                        email, password
+                    }
+                })
+                console.log(response.data.message);
+                window.location.href = "/signin.html"
+            }catch(e){
+                alert('email already exists');
+           }
+       } 
+    </script>
+</body>
+</html>

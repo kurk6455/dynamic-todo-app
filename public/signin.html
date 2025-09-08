@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signin</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+</head>
+<body>
+    <div>
+        <input type="text" id="email" placeholder="Enter your email"/><br>
+        <input type="password" id="password" placeholder="Enter your password"/><br>
+        <button onclick="signinHandler()">Sign in</button>
+    </div>
+    <br>
+    <div>New user - <a href="/signup.html">signup</a></div>
+
+    <script>
+        async function signinHandler(){
+           const email = document.getElementById('email').value;
+           const password = document.getElementById('password').value;
+
+           //Axios by default throws error in case of status - 4xx or 5xx
+           try{
+                const response = await axios({
+                    method : "post",
+                    url : "http://localhost:3000/signin",
+                    data : {
+                        email : email,
+                        password : password
+                    }
+                })
+                
+                localStorage.setItem('token', response.data.token);
+                console.log('successfully signin');
+                window.location.href = "/todos.html"
+            }catch(e){
+                alert('Invalid Credentials');
+           }
+       } 
+    </script>
+</body>
+</html>
